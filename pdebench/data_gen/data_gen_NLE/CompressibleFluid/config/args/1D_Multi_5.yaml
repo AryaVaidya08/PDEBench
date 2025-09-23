@@ -1,5 +1,5 @@
 save: "/content/"
-dt_save: 0.01
+dt_save: 0.05
 ini_time: 0.
 fin_time: 1
 nx: 128
@@ -20,7 +20,7 @@ if_second_order: 1.
 if_show: 1
 show_steps: 1
 p_floor: 1.e-4
-numbers: 5
+numbers: 50
 init_mode_Multi: "1D_rand"
 init_key: 2022
 if_rand_param: False

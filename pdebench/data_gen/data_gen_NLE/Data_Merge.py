@@ -166,7 +166,7 @@ def _mergeRD(var, DataND, savedir):
         return None
 
     idx = 0
-    data_list = Path(savedir).glob(var + "*key*.npy")
+    data_list = list(Path(savedir).glob(var + "*key*.npy"))
     data_list.sort()
     for data_file in data_list:
         test = np.load(data_file).squeeze()
