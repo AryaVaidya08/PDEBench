@@ -24,4 +24,4 @@ numbers: 50
 init_mode_Multi: "1D_rand"
 init_key: 2022
 if_rand_param: False
-M0: 0.1
+M0: 0.

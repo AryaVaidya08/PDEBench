@@ -20,7 +20,7 @@ if_second_order: 1.
 if_show: 1
 show_steps: 100
 p_floor: 1.e-4
-numbers: 100
+numbers: 50
 init_mode_Multi: "2D_rand"
 M0: 0.1
 k_tot: 4
