@@ -210,10 +210,12 @@ def nan_check(data):
 def merge(type, dim, bd, nbatch, savedir):
     if type == "CFD":
         data = list(Path(savedir).glob("HD*D.npy"))
+        print(data, savedir)
         data.sort()
         test = np.load(data[0])
         __nbatch, nt, nx, ny, nz = test.shape
         _nbatch = __nbatch * len(data)
+        print((nbatch, _nbatch), (2 * nbatch, _nbatch))
         assert (
             nbatch <= _nbatch
         ), "nbatch should be equal or less than the number of generated samples"
@@ -257,7 +259,7 @@ def merge(type, dim, bd, nbatch, savedir):
             DataND = _mergeRD(var, DataND, savedir)
             np.save(savedir + "/" + var + ".npy", DataND)
 
-    data = Path(savedir).glob("*npy")
+    data = list(Path(savedir).glob("*npy"))
     data.sort()
 
     if type == "CFD":
@@ -283,10 +285,10 @@ def merge(type, dim, bd, nbatch, savedir):
             f.attrs["beta"] = float(_beta[4:])
         return 0
 
-    mode = data[1].split("/")[-1].split("_")[3]
-    _eta = data[1].split("/")[-1].split("_")[4]
-    _zeta = data[1].split("/")[-1].split("_")[5]
-    _M = data[1].split("/")[-1].split("_")[6]
+    mode = str(data[1]).split("/")[-1].split("_")[3]
+    _eta = str(data[1]).split("/")[-1].split("_")[4]
+    _zeta = str(data[1]).split("/")[-1].split("_")[5]
+    _M = str(data[1]).split("/")[-1].split("_")[6]
     if dim == 1:
         flnm = (
             savedir
@@ -332,19 +334,19 @@ def merge(type, dim, bd, nbatch, savedir):
         )
 
     del DataND
-
+    print(flnm)
     with h5py.File(flnm, "w") as f:
-        f.create_dataet("density", data=np.load(savedir + "/D.npy"))
-        f.create_dataet("pressure", data=np.load(savedir + "/P.npy"))
-        f.create_dataet("Vx", data=np.load(savedir + "/Vx.npy"))
+        f.create_dataset("density", data=np.load(savedir + "/D.npy"))
+        f.create_dataset("pressure", data=np.load(savedir + "/P.npy"))
+        f.create_dataset("Vx", data=np.load(savedir + "/Vx.npy"))
         if dim > 1:
-            f.create_dataet("Vy", data=np.load(savedir + "/Vy.npy"))
-            f.create_dataet("y-coordinate", data=ycrd)
+            f.create_dataset("Vy", data=np.load(savedir + "/Vy.npy"))
+            f.create_dataest("y-coordinate", data=ycrd)
         if dim == 3:
-            f.create_dataet("Vz", data=np.load(savedir + "/Vz.npy"))
-            f.create_dataet("z-coordinate", data=zcrd)
-        f.create_dataet("x-coordinate", data=xcrd)
-        f.create_dataet("t-coordinate", data=tcrd)
+            f.create_dataset("Vz", data=np.load(savedir + "/Vz.npy"))
+            f.create_dataset("z-coordinate", data=zcrd)
+        f.create_dataset("x-coordinate", data=xcrd)
+        f.create_dataset("t-coordinate", data=tcrd)
         eta = float(_eta[3:])
         zeta = float(_zeta[4:])
         f.attrs["eta"] = eta
@@ -365,7 +367,7 @@ def transform(type, savedir):
     tcrd = np.load(data[-1])
     del data[-1]
 
-    flnm = data[0]
+    flnm = str(data[0])
     with h5py.File(flnm[:-3] + "hdf5", "w") as f:
         _data = np.load(flnm)
 
