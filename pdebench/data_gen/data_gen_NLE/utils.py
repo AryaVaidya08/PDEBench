@@ -1428,13 +1428,13 @@ def bc_HD(u, mode):
     Nz -= 2
     if mode == "periodic":  # periodic boundary condition
         # left hand side
-        u = u.loc[:, 0:2, 2:-2, 2:-2].set(u[:, Nx - 2 : Nx, 2:-2, 2:-2])  # x
-        u = u.loc[:, 2:-2, 0:2, 2:-2].set(u[:, 2:-2, Ny - 2 : Ny, 2:-2])  # y
-        u = u.loc[:, 2:-2, 2:-2, 0:2].set(u[:, 2:-2, 2:-2, Nz - 2 : Nz])  # z
+        u = u.at[:, 0:2, 2:-2, 2:-2].set(u[:, Nx - 2 : Nx, 2:-2, 2:-2])  # x
+        u = u.at[:, 2:-2, 0:2, 2:-2].set(u[:, 2:-2, Ny - 2 : Ny, 2:-2])  # y
+        u = u.at[:, 2:-2, 2:-2, 0:2].set(u[:, 2:-2, 2:-2, Nz - 2 : Nz])  # z
         # right hand side
-        u = u.loc[:, Nx : Nx + 2, 2:-2, 2:-2].set(u[:, 2:4, 2:-2, 2:-2])
-        u = u.loc[:, 2:-2, Ny : Ny + 2, 2:-2].set(u[:, 2:-2, 2:4, 2:-2])
-        u = u.loc[:, 2:-2, 2:-2, Nz : Nz + 2].set(u[:, 2:-2, 2:-2, 2:4])
+        u = u.at[:, Nx : Nx + 2, 2:-2, 2:-2].set(u[:, 2:4, 2:-2, 2:-2])
+        u = u.at[:, 2:-2, Ny : Ny + 2, 2:-2].set(u[:, 2:-2, 2:4, 2:-2])
+        u = u.at[:, 2:-2, 2:-2, Nz : Nz + 2].set(u[:, 2:-2, 2:-2, 2:4])
     elif mode == "trans":  # periodic boundary condition
         # left hand side
         u = u.loc[:, 0, 2:-2, 2:-2].set(u[:, 3, 2:-2, 2:-2])  # x
@@ -1536,10 +1536,10 @@ def limiting_HD(u, if_second_order):
     du_M = (u[:, 2 : nx + 4, :, :] - u[:, 0 : nx + 2, :, :]) * 0.5
     gradu = VLlimiter(du_L, du_R, du_M) * if_second_order
     # -1:Ncell
-    uL = uL.loc[:, 1 : nx + 3, :, :].set(
+    uL = uL.at[:, 1 : nx + 3, :, :].set(
         u[:, 1 : nx + 3, :, :] - 0.5 * gradu
     )  # left of cell
-    uR = uR.loc[:, 1 : nx + 3, :, :].set(
+    uR = uR.at[:, 1 : nx + 3, :, :].set(
         u[:, 1 : nx + 3, :, :] + 0.5 * gradu
     )  # right of cell
 

@@ -159,6 +159,8 @@ import jax
 import jax.numpy as jnp
 from jax import device_put, jit, lax
 from omegaconf import DictConfig
+import sys
+sys.path.append("/content/pdebench/datagen/data_gen_NLE")
 from utils import (
     Courant_HD,
     Courant_vis_HD,
