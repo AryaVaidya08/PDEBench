@@ -191,7 +191,7 @@ def _merge(var, DataND, dim, savedir):
         return None
 
     idx = 0
-    data = Path(savedir).glob("HD*" + var + ".npy")
+    data = list(Path(savedir).glob("HD*" + var + ".npy"))
     data.sort()
     for data_file in data:
         test = np.load(data_file).squeeze()
@@ -209,7 +209,7 @@ def nan_check(data):
 
 def merge(type, dim, bd, nbatch, savedir):
     if type == "CFD":
-        data = Path(savedir).glob("HD*D.npy")
+        data = list(Path(savedir).glob("HD*D.npy"))
         data.sort()
         test = np.load(data[0])
         __nbatch, nt, nx, ny, nz = test.shape
@@ -357,7 +357,8 @@ def merge(type, dim, bd, nbatch, savedir):
 
 
 def transform(type, savedir):
-    data = Path(savedir).glob("*npy")
+    data = list(Path(savedir).glob("*npy"))
+    print(savedir)
     data.sort()
     xcrd = np.load(data[-1])
     del data[-1]
