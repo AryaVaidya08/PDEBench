@@ -1,4 +1,4 @@
-save: "/content/1D_data/DataEta1_e5"
+save: "/content/1D_data/DataEta1_e5/"
 dt_save: 0.05
 ini_time: 0.
 fin_time: 1
