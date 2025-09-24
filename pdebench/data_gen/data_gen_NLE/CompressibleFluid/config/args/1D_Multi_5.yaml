@@ -20,8 +20,8 @@ if_second_order: 1.
 if_show: 1
 show_steps: 1
 p_floor: 1.e-4
-numbers: 50
+numbers: 200
 init_mode_Multi: "1D_rand"
 init_key: 2022
 if_rand_param: False
-M0: 0.
+M0: 0.1

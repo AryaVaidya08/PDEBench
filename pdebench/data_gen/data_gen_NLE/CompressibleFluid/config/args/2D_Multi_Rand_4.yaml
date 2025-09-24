@@ -13,8 +13,8 @@ zL: 0.
 zR: 1.
 bc: "periodic"
 gamma: 1.6666666666666667
-eta: 1.e-8
-zeta: 1.e-8
+eta: 1.e-4
+zeta: 1.e-2
 CFL: 3.e-1
 if_second_order: 1.
 if_show: 1
