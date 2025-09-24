@@ -278,10 +278,10 @@ def merge(type, dim, bd, nbatch, savedir):
         _beta = data[0].split("/")[-1].split("_")[3]
         flnm = savedir + "/2D_DecayFlow_" + _beta + "_Train.hdf5"
         with h5py.File(flnm, "w") as f:
-            f.create_dataet("tensor", data=np.load(savedir + "/2D.npy")[:, None, :, :])
-            f.create_dataet("nu", data=np.load(savedir + "/nu.npy"))
-            f.create_dataet("x-coordinate", data=xcrd)
-            f.create_dataet("y-coordinate", data=ycrd)
+            f.create_dataset("tensor", data=np.load(savedir + "/2D.npy")[:, None, :, :])
+            f.create_dataset("nu", data=np.load(savedir + "/nu.npy"))
+            f.create_dataset("x-coordinate", data=xcrd)
+            f.create_dataset("y-coordinate", data=ycrd)
             f.attrs["beta"] = float(_beta[4:])
         return 0
 
@@ -341,7 +341,7 @@ def merge(type, dim, bd, nbatch, savedir):
         f.create_dataset("Vx", data=np.load(savedir + "/Vx.npy"))
         if dim > 1:
             f.create_dataset("Vy", data=np.load(savedir + "/Vy.npy"))
-            f.create_dataest("y-coordinate", data=ycrd)
+            f.create_dataset("y-coordinate", data=ycrd)
         if dim == 3:
             f.create_dataset("Vz", data=np.load(savedir + "/Vz.npy"))
             f.create_dataset("z-coordinate", data=zcrd)
