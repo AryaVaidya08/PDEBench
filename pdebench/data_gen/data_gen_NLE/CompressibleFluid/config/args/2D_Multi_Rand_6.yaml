@@ -1,4 +1,4 @@
-save: "../save/CFD/"
+save: "/content/2D_data/DataEta1_e6/"
 dt_save: 0.05
 ini_time: 0.
 fin_time: 1.

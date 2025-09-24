@@ -1024,10 +1024,10 @@ def init_multi_HD_2DRand(
         d = d0 * (1.0 + delD * d / jnp.abs(d).mean())
         p = p0 * (1.0 + delP * p / jnp.abs(p).mean())
 
-        u = u.loc[0, 2:-2, 2:-2, 2:-2].set(d)
-        u = u.loc[1, 2:-2, 2:-2, 2:-2].set(vx)
-        u = u.loc[2, 2:-2, 2:-2, 2:-2].set(vy)
-        return u.loc[4, 2:-2, 2:-2, 2:-2].set(p)
+        u = u.at[0, 2:-2, 2:-2, 2:-2].set(d)
+        u = u.at[1, 2:-2, 2:-2, 2:-2].set(vx)
+        u = u.at[2, 2:-2, 2:-2, 2:-2].set(vy)
+        return u.at[4, 2:-2, 2:-2, 2:-2].set(p)
 
     key = random.PRNGKey(init_key)
     d0 = random.uniform(key, shape=([numbers, 1]), minval=1.0e-1, maxval=dMx)
@@ -1066,13 +1066,13 @@ def init_multi_HD_2DRand(
     carry = cond, mask, _xc, _yc, xL, xR, yL, yR, trns
     cond, mask, _xc, _yc, xL, xR, yL, yR, trns = vmap(select_W, 0, 0)(carry)
 
-    u = u.loc[:, :, 2:-2, 2:-2, 2:-2].set(
+    u = u.at[:, :, 2:-2, 2:-2, 2:-2].set(
         u[:, :, 2:-2, 2:-2, 2:-2] * mask[:, None, :, :, None]
     )
-    u = u.loc[:, 0, 2:-2, 2:-2, 2:-2].add(
+    u = u.at[:, 0, 2:-2, 2:-2, 2:-2].add(
         d0[:, :, None, None] * (1.0 - mask[:, :, :, None])
     )
-    return u.loc[:, 4, 2:-2, 2:-2, 2:-2].add(
+    return u.at[:, 4, 2:-2, 2:-2, 2:-2].add(
         d0[:, :, None, None] * T0[:, :, None, None] * (1.0 - mask[:, :, :, None])
     )
 
